@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "events.schema.json",
+  "title": "UsageEvent",
+  "description": "One threshold crossing reported by a client. Never contains app names or exact minutes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventId", "userId", "platform", "label", "type", "bucketMinutes", "localDate", "timezone", "occurredAt"],
+  "properties": {
+    "eventId": { "type": "string", "format": "uuid", "description": "Client-generated; also the Firestore document ID, so uploads are idempotent." },
+    "userId": { "type": "string" },
+    "platform": { "enum": ["android", "ios"] },
+    "label": { "type": "string", "examples": ["social"] },
+    "type": {
+      "enum": ["bucket_reached", "session_threshold"],
+      "description": "bucket_reached: today's cumulative usage for label crossed bucketMinutes, once per bucket per day. session_threshold: one continuous session crossed the session limit (Android only, optional for the backend)."
+    },
+    "bucketMinutes": { "type": "integer", "minimum": 15, "multipleOf": 15, "description": "For session_threshold, the session limit that was crossed." },
+    "localDate": { "type": "string", "format": "date" },
+    "timezone": { "type": "string", "description": "IANA zone, e.g. America/Los_Angeles." },
+    "occurredAt": { "type": "string", "format": "date-time", "description": "UTC." }
+  }
+}

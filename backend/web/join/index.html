@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join on Doomscroll</title>
+  <style>
+    body { font: 18px/1.5 system-ui, sans-serif; max-width: 32rem; margin: 3rem auto; padding: 0 16px; }
+    code { font-size: 1.4em; background: #eee; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <!-- Shown only when the app isn't installed; with it installed, Android opens the app instead.
+       Serve this file for every /join/* path (e.g. a 404.html copy or a host rewrite). -->
+  <h1>You're invited to a Doomscroll group</h1>
+  <p>Install the app, then open this link again, or paste this code in "Create or join a group":</p>
+  <p><code id="code"></code></p>
+  <p><a href="https://play.google.com/store/apps/details?id=com.doomscroll.app">Get it on Google Play</a></p>
+  <script>
+    document.getElementById("code").textContent = location.pathname.split("/").filter(Boolean).pop() || "";
+  </script>
+</body>
+</html>
